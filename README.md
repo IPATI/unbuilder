@@ -19,7 +19,10 @@ Last update: March, 2016
  sudo dnf -y install python-devel libsndfile-devel freetype-devel scipy
  
  sudo pip install --upgrade scikits.audiolab
+ 
  sudo pip install --upgrade numpy
+ 
  sudo pip install --upgrade matplotlib
+ 
  sudo pip install --upgrade pywavelets
  

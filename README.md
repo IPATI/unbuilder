@@ -4,7 +4,7 @@
 
 #### Segmentation module
 
-Last update: March, 2016
+Last update: April, 2016
 
  This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
  You are free to share and adapt, but you must give appropriate credit, provide a link to the license, 

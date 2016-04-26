@@ -6,7 +6,7 @@
 #
 # Segmentation module
 #
-# Last update: March, 2016
+# Last update: April, 2016
 #
 # This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
 # You are free to share and adapt, but you must give appropriate credit, provide a link to the license, 
@@ -32,7 +32,7 @@ import numpy as np
 import pywt
 
 print '*************  IPATI UNBUILDER - SEGMENTATION *******************'
-nomearq=('alopessoal_marlene.wav')     # leitura do arquivo
+nomearq=('depoimento_marlene1.wav')     # leitura do arquivo
 voz,Fs,bits=wavread(nomearq)  
 print "freq:",Fs
 print "bits:",bits
@@ -62,6 +62,8 @@ n=[0]*tam1
 cortes=[0]*tam1
 pcortereal=[0]*tam
 cont=0
+abriu = False
+inicio = fim = 0
 for i in range(2,len(cca)):
     w=cca[i]
     if (w < limite_fora and w > -limite_fora and (w > limite_dentro or w < -limite_dentro)):
@@ -73,15 +75,26 @@ for i in range(2,len(cca)):
 			cont+=1
 		else:
 			cont == 0
-		if cont == 250:	# contagem de pontos zerados =>VALIDAR<=
+			
+		if cont >= 350:	# contagem de pontos zerados =>VALIDAR<=
 			pcortereal[i*nivel*2]=0.5	# desloca o ponto de corte para onda original
 			cont = 0
-			print "ponto de corte: ",i*nivel*2
+			#print "ponto de corte: ",i*nivel*2
+			if not(abriu):
+				inicio = i*nivel*2
+				abriu = True
+			else:
+				fim = i*nivel*2
+				if (fim-inicio)>3900:	# numero de pontos mínimo que se percebeu a vocalização
+					arq="segs/seg%d-%d.wav" % (inicio,fim)
+					wavwrite(voz[inicio:fim],arq,Fs)
+				inicio = i*nivel*2 + 1
 			
 #%%%%%%%%%%% mostra gráfico
+'''
 figure
 plot(voz,'y')
 plot(pcortereal,'r+')
 show()
-
+'''
 ############################ END OF FILE ############################

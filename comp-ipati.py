@@ -21,9 +21,20 @@
 from pydub import AudioSegment
 import glob
 import random
+import sys
+import os.path
 
 print '*************  IPATI UNBUILDER - COMPOSITION *******************'
-arqs=glob.glob('segs/*.wav')     # leitura do diretório com segmentos
+try:
+	dir_audio=sys.argv[1]
+except:
+	print "Você deve escrever o nome da pasta com os segmentos, assim: python comp-ipaty.py nome_da_pasta"
+	quit()
+if not(os.path.exists(dir_audio)):
+	print "Não encontrei a pasta <<%s>> - verifique se o nome está correto." % dir_audio
+	quit()
+arqs_dir_audio = dir_audio + '/*.wav'
+arqs=glob.glob(arqs_dir_audio)     # leitura do diretório com segmentos
 #print arqs
 tam = len(arqs)
 print "Temos %d arquivos!" % tam
@@ -36,7 +47,7 @@ for i in range(tam*3):
 	voz = AudioSegment.from_wav(arqs[s])
 	total=total+voz
 
-nomearq="composicao.wav"
+nomearq = dir_audio + "_composicao.wav"
 total.export(nomearq,format="wav")
 print "Ordem de sorteio dos arquivos: ",lista
 

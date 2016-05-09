@@ -6,7 +6,7 @@
 #
 # Segmentation module
 #
-# Last update: April, 2016
+# Last update: May, 2016
 #
 # This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
 # You are free to share and adapt, but you must give appropriate credit, provide a link to the license, 
@@ -30,9 +30,21 @@ from scikits.audiolab import *
 from pylab import *
 import numpy as np
 import pywt
+import sys
+import os
 
 print '*************  IPATI UNBUILDER - SEGMENTATION *******************'
-nomearq=('depoimento_marlene1.wav')     # leitura do arquivo
+try:
+	arq_audio = sys.argv[1]
+except:
+	print "Você deve escrever o nome do arquivo de áudio, assim: python seg-ipaty.py nome_do_audio.wav"
+	quit()
+if not(os.path.exists(arq_audio)):
+	print "Não encontrei o arquivo <<%s>> - verifique se o nome está correto." % arq_audio
+	quit()
+nomearq=arq_audio   #('depoimento_marlene1.wav')     # leitura do arquivo
+diretorio=arq_audio[0:-4] + '_segs'
+os.mkdir(diretorio)
 voz,Fs,bits=wavread(nomearq)  
 print "freq:",Fs
 print "bits:",bits
@@ -86,7 +98,7 @@ for i in range(2,len(cca)):
 			else:
 				fim = i*nivel*2
 				if (fim-inicio)>3900:	# numero de pontos mínimo que se percebeu a vocalização
-					arq="segs/seg%d-%d.wav" % (inicio,fim)
+					arq="%s/seg%d-%d.wav" % (diretorio,inicio,fim)
 					wavwrite(voz[inicio:fim],arq,Fs)
 				inicio = i*nivel*2 + 1
 			

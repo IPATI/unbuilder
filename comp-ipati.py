@@ -16,10 +16,7 @@
 #
 # sudo pip install pydub
 #
-# 
-# ATTENTION: calibrated to Brazilian Portuguese speech
 
-#from scikits.audiolab import *
 from pydub import AudioSegment
 import glob
 import random

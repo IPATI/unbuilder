@@ -40,7 +40,7 @@ print "We have %d files!" % length
 total = AudioSegment.from_wav(files[length/2]) # we start a mid file in folder
 list=[length/2]
 # to test, we generate 2 times larger than original file group
-for i in range(length*3):
+for i in range(length*2):
 	s = random.randint(0,length-1)
 	list.append(s)
 	voice = AudioSegment.from_wav(files[s])
